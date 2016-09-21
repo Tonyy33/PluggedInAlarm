@@ -2,7 +2,6 @@ package com.example.pluggedinalarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,80 +9,54 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    AlarmManager alarm_manager;
-    TimePicker alarm_timepicker;
-    TextView update_text;
-    PendingIntent pending_intent;
-    Context context;
+    AlarmManager alarmManager;
+    TimePicker alarmTimepicker;
+    TextView updateText;
+    PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        this.context = this;
-
-        alarm_timepicker = (TimePicker) findViewById(R.id.timePicker);
-
-        alarm_manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        update_text = (TextView) findViewById(R.id.update_text);
-
+        alarmTimepicker = (TimePicker) findViewById(R.id.timePicker);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        updateText = (TextView) findViewById(R.id.updateText);
         final Calendar calendar = Calendar.getInstance();
+        final Intent myIntent = new Intent(this, AlarmReceiver.class);
 
-        final Intent my_intent = new Intent(this.context, Alarm_Receiver.class);
-
-        Button start_alarm = (Button) findViewById(R.id.start_alarm);
-
-        start_alarm.setOnClickListener(new View.OnClickListener() {
+        Button startAlarm = (Button) findViewById(R.id.startAlarm);
+        startAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                calendar.set(Calendar.HOUR_OF_DAY, alarm_timepicker.getHour());
-                calendar.set(Calendar.MINUTE, alarm_timepicker.getMinute());
+                calendar.set(Calendar.HOUR_OF_DAY, alarmTimepicker.getHour());
+                calendar.set(Calendar.MINUTE, alarmTimepicker.getMinute());
 
-                set_alarm_text("Alarm on!");
-
-                my_intent.putExtra("extra","alarm on" );
-
-                pending_intent = PendingIntent.getBroadcast(MainActivity.this, 0, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending_intent);
+                setAlarmText("Alarm on!");
+                myIntent.putExtra("extra","alarm on" );
+                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
         });
 
-        Button stop_alarm = (Button) findViewById(R.id.end_alarm);
-
-
-        stop_alarm.setOnClickListener(new View.OnClickListener() {
+        Button stopAlarm = (Button) findViewById(R.id.endAlarm);
+        stopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                set_alarm_text("Alarm off!");
-
-                alarm_manager.cancel(pending_intent);
-
-                my_intent.putExtra("extra", "alarm off");
-
-                sendBroadcast(my_intent);
+                setAlarmText("Alarm off!");
+                alarmManager.cancel(pendingIntent);
+                myIntent.putExtra("extra", "alarm off");
+                sendBroadcast(myIntent);
 
             }
         });
-
-
-
-
-
     }
-
-    private void set_alarm_text(String output) {
-
-        update_text.setText(output);
-
+    private void setAlarmText(String output) {
+        updateText.setText(output);
     }
 }
