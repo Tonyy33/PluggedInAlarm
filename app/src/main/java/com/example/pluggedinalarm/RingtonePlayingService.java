@@ -9,9 +9,6 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-/**
- * Created by azimo123 on 20/09/16.
- */
 public class RingtonePlayingService extends Service {
 
     public MediaPlayer mediaSong;
@@ -53,6 +50,7 @@ public class RingtonePlayingService extends Service {
             Intent intentMainActivity = new Intent(this.getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntentMainActivity = PendingIntent.getActivity(this, 0, intentMainActivity, 0);
             Notification notificationPopup = new Notification.Builder(this)
+                    .setSmallIcon(R.drawable.small_icon)
                     .setContentTitle("Alarm is going off!")
                     .setContentIntent(pendingIntentMainActivity)
                     .setAutoCancel(true)

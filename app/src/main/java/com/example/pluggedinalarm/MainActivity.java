@@ -15,8 +15,11 @@ public class MainActivity extends AppCompatActivity {
 
     public AlarmManager alarmManager;
     public TimePicker alarmTimepicker;
-    public TextView updateText;
     public PendingIntent pendingIntent;
+
+    public TextView tvUpdateText;
+    public Button btnStartAlarm;
+    public Button btnStopAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         alarmTimepicker = (TimePicker) findViewById(R.id.timePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        updateText = (TextView) findViewById(R.id.updateText);
+        tvUpdateText = (TextView) findViewById(R.id.updateText);
         final Calendar calendar = Calendar.getInstance();
         final Intent myIntent = new Intent(this, AlarmReceiver.class);
 
-        Button startAlarm = (Button) findViewById(R.id.startAlarm);
-        startAlarm.setOnClickListener(new View.OnClickListener() {
+        btnStartAlarm = (Button) findViewById(R.id.startAlarm);
+        btnStartAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -44,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button stopAlarm = (Button) findViewById(R.id.endAlarm);
-        stopAlarm.setOnClickListener(new View.OnClickListener() {
+        btnStopAlarm = (Button) findViewById(R.id.endAlarm);
+        btnStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAlarmText("Alarm off!");
@@ -56,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setAlarmText(String output) {
-        updateText.setText(output);
+        tvUpdateText.setText(output);
     }
 }
