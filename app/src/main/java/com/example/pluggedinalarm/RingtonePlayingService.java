@@ -1,5 +1,8 @@
 package com.example.pluggedinalarm;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,9 +14,9 @@ import android.support.annotation.Nullable;
  */
 public class RingtonePlayingService extends Service {
 
-    MediaPlayer mediaSong;
-    int startId;
-    boolean isRunning;
+    public MediaPlayer mediaSong;
+    public int startId;
+    public boolean isRunning;
 
     @Nullable
     @Override
@@ -43,22 +46,32 @@ public class RingtonePlayingService extends Service {
             mediaSong.start();
             this.isRunning = true;
             this.startId = 0;
-        }
-        else if (this.isRunning && startId == 0){
+
+            //notifications
+            NotificationManager notificationManager = (NotificationManager)
+                    getSystemService(NOTIFICATION_SERVICE);
+            Intent intentMainActivity = new Intent(this.getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntentMainActivity = PendingIntent.getActivity(this, 0, intentMainActivity, 0);
+            Notification notificationPopup = new Notification.Builder(this)
+                    .setContentTitle("Alarm is going off!")
+                    .setContentIntent(pendingIntentMainActivity)
+                    .setAutoCancel(true)
+                    .build();
+
+            notificationManager.notify(0, notificationPopup);
+
+        } else if (this.isRunning && startId == 0){
             mediaSong.stop();
             mediaSong.reset();
             this.isRunning = false;
             this.startId = 0;
-        }
-        else if (!this.isRunning && startId == 0){
+        } else if (!this.isRunning && startId == 0){
             this.isRunning = false;
             this.startId = 0;
-        }
-        else if (this.isRunning && startId == 1){
+        } else if (this.isRunning && startId == 1){
             this.isRunning = true;
             this.startId = 1;
-        }
-        else {
+        } else {
 
         }
         return START_NOT_STICKY;

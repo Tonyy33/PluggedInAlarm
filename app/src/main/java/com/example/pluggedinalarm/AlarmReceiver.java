@@ -10,9 +10,9 @@ import android.content.Intent;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        String my_string = intent.getExtras().getString("extra");
-        Intent service_intent = new Intent(context, RingtonePlayingService.class);
-        service_intent.putExtra("extra", my_string);
-        context.startService(service_intent);
+        String myString = intent.getExtras().getString("extra");
+        Intent serviceIntent = new Intent(context, RingtonePlayingService.class);
+        serviceIntent.putExtra("extra", myString);
+        context.startService(serviceIntent);
     }
 }

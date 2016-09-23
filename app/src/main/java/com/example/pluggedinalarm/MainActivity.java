@@ -13,10 +13,10 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    AlarmManager alarmManager;
-    TimePicker alarmTimepicker;
-    TextView updateText;
-    PendingIntent pendingIntent;
+    public AlarmManager alarmManager;
+    public TimePicker alarmTimepicker;
+    public TextView updateText;
+    public PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.MINUTE, alarmTimepicker.getMinute());
 
                 setAlarmText("Alarm on!");
+
                 myIntent.putExtra("extra","alarm on" );
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
@@ -47,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
         stopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 setAlarmText("Alarm off!");
+
                 alarmManager.cancel(pendingIntent);
                 myIntent.putExtra("extra", "alarm off");
                 sendBroadcast(myIntent);
-
             }
         });
     }
