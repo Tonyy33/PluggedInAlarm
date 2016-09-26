@@ -4,9 +4,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 
 public class RingtonePlayingService extends Service {
@@ -14,6 +16,7 @@ public class RingtonePlayingService extends Service {
     public MediaPlayer mediaSong;
     public int startId;
     public boolean isRunning;
+    public Vibrator vbrVibration;
 
     @Nullable
     @Override
@@ -39,6 +42,7 @@ public class RingtonePlayingService extends Service {
         }
 
         if (!this.isRunning && startId == 1){
+
             mediaSong = MediaPlayer.create(this, R.raw.ringtone);
             mediaSong.start();
             this.isRunning = true;
@@ -51,12 +55,18 @@ public class RingtonePlayingService extends Service {
             PendingIntent pendingIntentMainActivity = PendingIntent.getActivity(this, 0, intentMainActivity, 0);
             Notification notificationPopup = new Notification.Builder(this)
                     .setSmallIcon(R.drawable.small_icon)
-                    .setContentTitle("Alarm is going off!")
+                    .setContentTitle("Plug your phone!!!")
                     .setContentIntent(pendingIntentMainActivity)
                     .setAutoCancel(true)
                     .build();
 
             notificationManager.notify(0, notificationPopup);
+
+
+            vbrVibration = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+            vbrVibration.vibrate(1000);
+
+
 
         } else if (this.isRunning && startId == 0){
             mediaSong.stop();
@@ -83,3 +93,4 @@ public class RingtonePlayingService extends Service {
 
     }
 }
+
