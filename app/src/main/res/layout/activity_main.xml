@@ -41,7 +41,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Azimo"
         android:id="@+id/updateText"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@+id/startAlarm"
+        android:layout_above="@+id/endAlarm"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

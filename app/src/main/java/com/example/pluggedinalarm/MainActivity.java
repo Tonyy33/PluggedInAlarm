@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btnStartAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("Test-log", " Service on click alarm on");
                 calendar.set(Calendar.HOUR_OF_DAY, alarmTimepicker.getHour());
                 calendar.set(Calendar.MINUTE, alarmTimepicker.getMinute());
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btnStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Test-log", " Service on click alarm off");
                 setAlarmText("Alarm off!");
 
                 alarmManager.cancel(pendingIntent);
