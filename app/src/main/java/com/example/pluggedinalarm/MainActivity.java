@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         tvUpdateText = (TextView) findViewById(R.id.updateText);
         final Calendar calendar = Calendar.getInstance();
-        final Intent myIntent = new Intent(this, AlarmReceiver.class);
+        final Intent myIntent = new Intent(this, DailyAlarm.class);
 
         btnStartAlarm = (Button) findViewById(R.id.startAlarm);
         btnStartAlarm.setOnClickListener(new View.OnClickListener() {
@@ -39,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Test-log", " Service on click alarm on");
                 calendar.set(Calendar.HOUR_OF_DAY, alarmTimepicker.getHour());
                 calendar.set(Calendar.MINUTE, alarmTimepicker.getMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
 
                 setAlarmText("Alarm on!");
 
                 myIntent.putExtra("extra","alarm on" );
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 1000 * 60, pendingIntent);
             }
         });
 

@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".DailyAlarm"/>
+        <receiver android:name=".ActionAlarm"/>
+
 
         <service
             android:name="RingtonePlayingService"

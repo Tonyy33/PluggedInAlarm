@@ -11,7 +11,7 @@
 
     <Button
         android:layout_height="wrap_content"
-        android:text="Cancel Alarm"
+        android:text="Stop Alarm"
         android:id="@+id/endAlarm"
         android:clickable="true"
         android:layout_width="130dp"

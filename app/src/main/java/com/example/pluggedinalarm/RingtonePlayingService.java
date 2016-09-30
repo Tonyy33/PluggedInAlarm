@@ -43,7 +43,6 @@ public class RingtonePlayingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String state = intent.getExtras().getString("extra");
-        assert state != null;
 
         switch (state) {
             case "alarm on":
@@ -73,6 +72,7 @@ public class RingtonePlayingService extends Service {
             Notification notificationPopup = new Notification.Builder(this)
                     .setSmallIcon(R.drawable.small_icon)
                     .setContentTitle("Monitor State")
+                    //.setContentText("Alarm set")
                     .setContentIntent(pendingIntentMainActivity)
                     .setAutoCancel(true)
                     .build();
